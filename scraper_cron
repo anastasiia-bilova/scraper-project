@@ -1,0 +1,2 @@
+PATH=/usr/local/bin:/usr/bin:/bin
+0 12 * * * /usr/local/bin/python3 /app/main.py >> /var/log/cron.log 2>&1
