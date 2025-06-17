@@ -1,0 +1,32 @@
+# macOS & Windows System Files
+.DS_Store
+Desktop.ini
+Thumbs.db
+._*
+
+# Logs & Databases
+*.log
+local_settings.py
+db.sqlite3
+
+# Development Environments
+.env
+.venv/
+env/
+venv/
+ENV/
+
+# Node.js
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+
+# Ruby
+*.gem
+
+# IDE Configurations
+.vscode/
+.idea/
+.sass-cache/
