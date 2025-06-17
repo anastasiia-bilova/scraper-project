@@ -6,8 +6,6 @@ It extracts detailed car data from a marketplace, and:
 - Saves structured data to a PostgreSQL database.
 - Saves raw JSON dumps to daily folders.
 
----
-
 ## 📦 Features
 
 - Scrapes all listings from a car marketplace with headless Selenium.
@@ -16,15 +14,13 @@ It extracts detailed car data from a marketplace, and:
   - 🗃️ PostgreSQL database
   - 📁 `/app/dumps/YYYY_MM_DD/` (raw JSON)
   - <img src="https://rb.gy/gck4wr" alt="Dumps folder screenshot" width="300"/>
-
----
-
+  
 ## 🐳 Run with Docker
 
 ### Copy and configure `.env`
 
 ```shell
-cp .env.example .env # edit PostgreSQL credentials inside .env
+$ cp .env.example .env # edit PostgreSQL credentials inside .env
 ```
 
 ### Build and start the container:
@@ -45,8 +41,6 @@ $ docker exec -it scraper_app tail -f /var/log/cron.log
 $ docker exec -it scraper_app ls /app/dumps/$(date +%Y_%m_%d)
 ```
 
----
-
 ## 🔁 Cron Schedule
 
 The scraper runs daily at 12:00 PM container time.
@@ -64,15 +58,11 @@ To update the time, edit scraper_cron file:
 0 12 * * * /usr/local/bin/python3 /app/main.py >> /var/log/cron.log 2>&1
 ```
 
----
-
 ## ✍️ Manually Trigger the Scraper
 
 ```shell
 $ docker exec -it scraper_app python /app/main.py
 ```
-
----
 
 ## 🛠 Development Tips
 
