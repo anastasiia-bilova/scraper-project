@@ -1,0 +1,46 @@
+services:
+  selenium:
+    image: seleniarm/standalone-chromium:latest
+    container_name: selenium
+    shm_size: 2g  # Prevent crashes from low shared memory
+    ports:
+      - "4444:4444"
+    environment:
+      - SE_NODE_SESSION_TIMEOUT=60
+
+  web:
+    build: .
+    container_name: scraper_app
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      selenium:
+        condition: service_started
+      db:
+        condition: service_healthy
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"  # if needed for web serving/debugging
+    shm_size: '2g'  # avoid Chrome crashes in Docker
+
+  db:
+    image: postgres:16
+    container_name: postgres
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U user -d postgres" ]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+
+volumes:
+  postgres_data:
